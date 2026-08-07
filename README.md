@@ -30,12 +30,6 @@ ServiceFlow es una aplicación de escritorio para gestionar servicios, productos
 3. Sigue los pasos
 4. ¡Listo!
 
-### Login por defecto:
-- Usuario: `admin` | Contraseña: `praia2024`
-- Usuario: `ventas` | Contraseña: `ventas123`
-- Usuario: `maritza` | Contraseña: `maritza123`
-- Usuario: `mary` | Contraseña: `mary123`
-- Usuario: `genesis` | Contraseña: `genesis123`
 
 ### Opción 2: Desde Código Fuente
 
