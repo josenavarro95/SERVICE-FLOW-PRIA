@@ -3,57 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ServiceFlow - Sistema de Gestión de Servicios</title>
+    <title>ServiceFlow - Descargar e Instalar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            background: #1A1410;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        #app {
-            width: 100vw;
-            height: 100vh;
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #1A1410 0%, #2E2218 100%);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #1A1410;
+            padding: 20px;
         }
-        iframe {
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            max-width: 500px;
             width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .loading {
-            color: #fff;
-            font-size: 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #A0633A 0%, #C4895A 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: #1A1410;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #8B6F5A;
+            font-size: 14px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .description {
+            color: #2C1F14;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            text-align: justify;
+        }
+
+        .features {
+            background: #F7EDE4;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .features h3 {
+            color: #A0633A;
+            font-size: 13px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            color: #2C1F14;
+            font-size: 13px;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #5A9970;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            flex-direction: column;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #A0633A 0%, #C4895A 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(160, 99, 58, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #A0633A;
+            border: 2px solid #A0633A;
+        }
+
+        .btn-secondary:hover {
+            background: #F7EDE4;
+            transform: translateY(-2px);
+        }
+
+        .version {
+            color: #8B6F5A;
+            font-size: 12px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #EAE0D8;
+        }
+
+        .icon-download {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .button-group {
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="app">
-        <iframe id="serviceflow" src="www/serviceflow.html" style="display:none;"></iframe>
-        <div class="loading">Cargando ServiceFlow...</div>
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo">📊</div>
+            <h1>ServiceFlow</h1>
+            <p class="subtitle">v1.0.0</p>
+        </div>
+
+        <!-- Descripción -->
+        <p class="description">
+            Sistema profesional de gestión de servicios, productos y gastos. Diseñado para pequeños y medianos negocios.
+        </p>
+
+        <!-- Características -->
+        <div class="features">
+            <h3>Características</h3>
+            <ul class="feature-list">
+                <li>Registro de servicios y productos</li>
+                <li>Gestión de gastos</li>
+                <li>Métricas en tiempo real</li>
+                <li>Múltiples usuarios con roles</li>
+                <li>Sincronización en la nube</li>
+            </ul>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="button-group">
+            <a href="https://github.com/josenavarro95/SERVICE-FLOW-PRIA/releases/download/v1.0.0/ServiceFlow-Setup-1.0.0.exe" class="btn btn-primary" download>
+                <span class="icon-download">⬇️</span> Descargar Instalador
+            </a>
+            <a href="serviceflow.html" class="btn btn-secondary">
+                ➜ Abrir Aplicación
+            </a>
+        </div>
+
+        <!-- Versión -->
+        <div class="version">
+            <strong>GitHub:</strong> josenavarro95/SERVICE-FLOW-PRIA<br>
+            <strong>Estado:</strong> ✅ Producción
+        </div>
     </div>
-
-    <script>
-        // Esperar a que cargue el iframe
-        const iframe = document.getElementById('serviceflow');
-        const loading = document.querySelector('.loading');
-
-        iframe.onload = function() {
-            loading.style.display = 'none';
-            iframe.style.display = 'block';
-        };
-
-        // Mostrar el iframe después de 500ms si no cargó
-        setTimeout(() => {
-            if (loading.style.display !== 'none') {
-                loading.style.display = 'none';
-                iframe.style.display = 'block';
-            }
-        }, 500);
-    </script>
 </body>
 </html>
