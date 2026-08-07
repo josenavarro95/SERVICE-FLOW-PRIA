@@ -2,7 +2,7 @@
   "name": "ServiceFlow",
   "short_name": "ServiceFlow",
   "description": "Sistema de Gestión de Servicios - Desktop App",
-  "start_url": "./serviceflow.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#A0633A",
