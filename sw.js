@@ -3,7 +3,6 @@ const URLS_TO_CACHE = [
   './',
   './index.html',
   './serviceflow.html',
-  './favicon-setup.js',
   './manifest.json'
 ];
 
