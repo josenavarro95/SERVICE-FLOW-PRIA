@@ -1,0 +1,85 @@
+========================================
+  SERVICEFLOW - ARCHIVOS LISTOS PARA GITHUB
+========================================
+
+✅ TODOS LOS ARCHIVOS ESTÁN LISTOS EN ESTA CARPETA
+
+Estructura:
+D:\INSTALADORES SERVICEFLOW\serviceflow-github\
+├── www/
+│   ├── serviceflow.html      ✅ App completa (con usuario ventas)
+│   ├── favicon-setup.js      ✅ Configuración de icono
+│   └── index.html            ✅ Página de entrada
+├── package.json              ✅ Configuración del proyecto
+├── main.js                   ✅ Electron main process
+├── preload.js                ✅ Preload script
+├── README.md                 ✅ Documentación
+├── .gitignore                ✅ Archivos a ignorar
+└── Otros
+
+========================================
+  CÓMO SUBIRLO A GITHUB
+========================================
+
+OPCION 1: DRAG & DROP (MAS RAPIDO)
+─────────────────────────────────
+
+1. Abre en el navegador:
+   https://github.com/josenavarro95/SERVICE-FLOW-PRIA
+
+2. Ve a la página principal del repositorio
+
+3. Ve a "Add file" → "Upload files"
+
+4. Abre esta carpeta:
+   D:\INSTALADORES SERVICEFLOW\serviceflow-github\
+
+5. Selecciona TODOS los archivos:
+   - Ctrl+A
+
+6. Arrastra los archivos al área de GitHub o
+   haz clic en "choose your files"
+
+7. Espera a que carguen los archivos
+
+8. En "Commit changes" escribe:
+   ServiceFlow v1.0.0 - Aplicación completa
+
+9. Haz clic en "Commit changes"
+
+OPCION 2: POWERSHELL (AUTOMATICO)
+──────────────────────────────────
+
+1. Abre PowerShell como ADMINISTRADOR
+
+2. Ejecuta:
+   D:\INSTALADORES SERVICEFLOW\serviceflow-github\SUBIR_A_GITHUB.ps1
+
+3. Listo! Los archivos se suben automáticamente
+
+========================================
+  USUARIOS DE PRUEBA
+========================================
+
+Usuario: admin
+Contraseña: praia2024
+Rol: Administrador
+
+Usuario: ventas
+Contraseña: ventas123
+Rol: Vendedor
+
+Usuario: maritza
+Contraseña: maritza123
+Rol: Colaboradora
+
+========================================
+  PROXIMOS PASOS
+========================================
+
+1. ✅ Subir archivos a GitHub
+2. ⏭️  Crear Release v1.0.0
+3. ⏭️  Adjuntar instalador .exe
+4. ⏭️  Publicar release
+
+========================================

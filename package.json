@@ -1,0 +1,20 @@
+{
+  "name": "serviceflow",
+  "version": "1.0.0",
+  "description": "Sistema de Gestión de Servicios - Desktop App",
+  "main": "main.js",
+  "author": "Jose Navarro",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win"
+  },
+  "dependencies": {
+    "firebase": "^9.23.0"
+  },
+  "devDependencies": {
+    "electron": "^latest",
+    "electron-builder": "^latest"
+  }
+}
