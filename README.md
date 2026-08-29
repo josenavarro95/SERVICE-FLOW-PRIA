@@ -59,15 +59,7 @@ serviceflow/
 
 ---
 
-## 🔑 Usuarios Disponibles
 
-| Usuario | Contraseña | Rol |
-|---------|------------|-----|
-| admin | praia2024 | Administrador |
-| ventas | ventas123 | Vendedor |
-| maritza | maritza123 | Colaboradora |
-| mary | mary123 | Colaboradora |
-| genesis | genesis123 | Colaboradora |
 
 ---
 
