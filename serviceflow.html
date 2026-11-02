@@ -2438,8 +2438,17 @@ function sincronizarColeccion(localStorageKey, datos) {
       // 4️⃣ Filtrar: eliminar IDs que están en la lista de eliminados
       datosMerge = Array.from(mapa.values()).filter(r => !idsEliminados.has(String(r.id)));
     } else {
-      // Para objetos (precios, comisiones, etc.)
-      datosMerge = datos;
+      // Para objetos (usuarios, precios, comisiones, etc.): fusionar
+      // clave por clave (local tiene prioridad en conflictos) en vez
+      // de reemplazar todo el documento. Un reemplazo total permitía
+      // que un dispositivo/pestaña con datos viejos en memoria
+      // borrara, en su sincronización periódica, un cambio reciente
+      // hecho desde otro dispositivo (p.ej. un renombre de
+      // colaboradora).
+      const clavesElimMap = cargarDato('praia_claves_eliminadas', {});
+      const clavesEliminadas = new Set(clavesElimMap[colección] || []);
+      datosMerge = { ...datosFirebase, ...datos };
+      clavesEliminadas.forEach(k => { delete datosMerge[k]; });
     }
 
     // 5️⃣ Subir resultado del merge a Firebase
@@ -2460,6 +2469,26 @@ function sincronizarColeccion(localStorageKey, datos) {
     actualizarIndicadorSync('error', colección);
     setTimeout(() => sincronizarColeccion(localStorageKey, datos), 3000);
   });
+}
+
+// Registra que una clave fue borrada de una colección tipo objeto
+// (usuarios, comisiones, precios...) para que la fusión por clave de
+// sincronizarColeccion() no la vuelva a traer de un dispositivo con
+// datos viejos. Se guarda local y se sube a Firebase (merge parcial,
+// sin afectar las claves eliminadas de otras colecciones).
+function registrarClaveEliminada(colección, clave) {
+  if (!clave) return;
+  const data = cargarDato('praia_claves_eliminadas', {});
+  if (!data[colección]) data[colección] = [];
+  if (!data[colección].includes(clave)) {
+    data[colección].push(clave);
+    localStorage.setItem('praia_claves_eliminadas', JSON.stringify(data));
+    if (window.firebaseDb && window.syncConfig.isOnline) {
+      window.firebaseDb.collection('salon').doc('_claves_eliminadas')
+        .set({ [colección]: data[colección], timestamp: new Date().toISOString() }, { merge: true })
+        .catch(e => console.error('❌ Error registrando clave eliminada:', e));
+    }
+  }
 }
 
 // Sincronizar TODAS las colecciones con Firebase
@@ -2525,6 +2554,29 @@ async function sincronizarDesdeFirestore() {
       console.log(`📋 IDs eliminados sincronizados: ${idsCombinados.length}`);
     }
   } catch(e) { console.warn('⚠️ No se pudo sincronizar lista de eliminados:', e); }
+
+  // 1️⃣b Sincronizar claves eliminadas de colecciones tipo objeto
+  // (usuarios, comisiones, precios, etc.) — mismo mecanismo que los
+  // IDs eliminados, pero para las claves (p.ej. un nombre de
+  // colaboradora que fue renombrado o borrado).
+  try {
+    const snapClaves = await window.firebaseDb.collection('salon').doc('_claves_eliminadas').get();
+    if (snapClaves.exists) {
+      const firebaseMap = snapClaves.data() || {};
+      const localMap = cargarDato('praia_claves_eliminadas', {});
+      let cambio = false;
+      Object.keys(firebaseMap).forEach(colección => {
+        if (colección === 'timestamp') return;
+        const firebaseClaves = firebaseMap[colección] || [];
+        const localClaves = localMap[colección] || [];
+        const combinadas = [...new Set([...localClaves, ...firebaseClaves])];
+        if (combinadas.length !== localClaves.length) cambio = true;
+        localMap[colección] = combinadas;
+      });
+      localStorage.setItem('praia_claves_eliminadas', JSON.stringify(localMap));
+      console.log('📋 Claves eliminadas sincronizadas');
+    }
+  } catch(e) { console.warn('⚠️ No se pudo sincronizar claves eliminadas:', e); }
 
   // 2️⃣ Obtener IDs eliminados para todas las operaciones de merge
   const idsEliminados = new Set(cargarDato('praia_eliminados', []).map(String));
@@ -6224,6 +6276,7 @@ function renombrarColaboradoraEnDatos(nombreAnterior, nombreNuevo) {
       comisiones[nombreNuevo] = comisiones[nombreAnterior];
     }
     delete comisiones[nombreAnterior];
+    registrarClaveEliminada('comisiones', nombreAnterior);
   }
 
   // Registros de servicios y productos vendidos
@@ -6262,6 +6315,7 @@ function guardarUsuario() {
     }
     usuarios[nuevoUsuario] = usuarios[key];
     delete usuarios[key];
+    registrarClaveEliminada('usuarios', key);
     // Si el usuario editado es el de la sesión actual, mantenerla consistente
     if (sesionActual && key === sesionActual.usuario) {
       sesionActual.usuario = nuevoUsuario;
@@ -6316,6 +6370,7 @@ function eliminarUsuarioDefinitivo(usuarioKey) {
   if (!confirm('¿Eliminar PERMANENTEMENTE la cuenta "' + u.nombre + '" (' + usuarioKey + ')?\n\nEsta acción no se puede deshacer: el usuario ya no podrá iniciar sesión y desaparecerá de todas las listas.')) return;
 
   delete usuarios[usuarioKey];
+  registrarClaveEliminada('usuarios', usuarioKey);
 
   // Refrescar EMPLEADAS a partir de las cuentas reales que queden
   sincronizarEmpleadas();
